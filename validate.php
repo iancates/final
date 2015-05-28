@@ -16,7 +16,7 @@ $searchAll = mysqli_query($connect,"SELECT * FROM finalLogin");
 while($row = mysqli_fetch_array($searchAll)) {
     if($row['userName'] == $userEntered) {
         if($row['password'] == $passEntered) {
-              header("Location: http://web.engr.oregonstate.edu/~catesia/final/home.php");  
+              header("Location: http://web.engr.oregonstate.edu/~catesia/final/home.php?user=".$userEntered);  
         }
     }
 }
