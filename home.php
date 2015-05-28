@@ -2,16 +2,27 @@
 $user = $_GET['user'];
  echo"
                 <script type=\"text/javascript\">
-                console.log("$user");
+                console.log(\"$user\");
                 </script>";
+
+echo"
+    <form action=\"search.php\" method=\"POST\">
+    <input type=\"hidden\" value=\"$user\" name=\"user\">
+    <input type=\"submit\" value=\"Movie Search\">
+    </form>
+";
+
+echo"
+    <form action=\"addFav.php\" method=\"POST\">
+    <input type=\"hidden\" value=\"$user\" name=\"user\">
+    <input type=\"submit\" value=\"View Favorites\">
+    </form>
+";
 ?>
 <!DOCTYPE html>
 <html>
 <body>
-<form action="search.php" method="POST">
-<input type="hidden" value="$<?php echo $_GET['user']?>" name="user">
-<input type="submit" value="Movie Search">
-</form>
+
     
 </body>
 </html>

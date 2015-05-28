@@ -1,9 +1,11 @@
 
 
 <?php
+    $user = $_POST['user'];
+    $title = $_POST['title'];
     if(isset($_POST['search'])) {
-        $title = $_POST['title'];
-        $user = $_POST['user'];
+        
+        
         echo"
                 <script type=\"text/javascript\">
                 var xhr = new XMLHttpRequest();
@@ -14,7 +16,7 @@
     
                 console.log(xhr.status);
                 console.log(xhr.statusText);
-                console.log($user);
+                console.log(\"$user\");
                 
                 if (xhr.readyState == 4 && xhr.status == 200) {
                     var myArr = JSON.parse(xhr.responseText)
@@ -23,14 +25,17 @@
                
                 </script>
         ";
-      //  echo "<script type=\"text/javascript\">
-        //    var para = document.createElement(\"p\");
-          //  var node = document.createTextNode(\"This is new.\" + myArr.Year);
-        //    para.appendChild(node);
-        //    var element = document.getElementById(\"div1\");
-        //    element.appendChild(para);
-          //  </script>";
+     
+        
+        
     }
+    echo "
+        <form action=\"search.php\" method=\"post\">
+        Movie Title: <input type=\"text\" name=\"title\">
+        <input type=\"hidden\" value=\"$user\" name=\"user\">
+        <input type=\"submit\" value=\"search\" name=\"search\">
+        </form>
+    ";
 ?>
 
 <!DOCTYPE html>
@@ -39,10 +44,7 @@
     <script>
     
     </script>
-    <form action="search.php" method="post">
-        Movie Title: <input type="text" name="title">
-        <input type="submit" value="search" name="search">
-    </form>
+    
     <div id="div1">
         
     </div>
@@ -51,7 +53,9 @@
 </html>
 <?php //echo "<img src=\"$poster\" alt=\"some_text\">";?>
 <?php
-    echo "<script type=\"text/javascript\">
+    if(isset($_POST['search'])) {
+    echo "
+        <script type=\"text/javascript\">
             var para = document.createElement(\"p\");
             var element = document.getElementById(\"div1\");
             
@@ -66,17 +70,77 @@
             para.appendChild(node);
             element.appendChild(para);
             </script>";
+        
+        echo "
+            <form action=\"search.php\" method=\"post\">
+                <input type=\"hidden\" value=\"$user\" name=\"user\">
+                <input type=\"hidden\" value=\"$title\" name=\"title\">
+                <input type=\"submit\" value=\"Add to Favorites\" name=\"addfav\">
+            </form>         
+            ";
+    }
 ?>
 
+<?php
+if(isset($_POST['addfav'])) {
+    ini_set('display_errors', 1);
+    $dbhost = 'oniddb.cws.oregonstate.edu';
+    $dbname = 'catesia-db';
+    $dbuser = 'catesia-db';
+    $dbpass = 'lDQEFSNyQixMYm7E';
+
+    //Done with the help of php mysqli documentation
+    $connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+    if ($connect->connect_errno) {
+        echo "Failed to connect: (" . $connect->connect_errno . ") " . $connect->connect_error;
+    }
+   if (!($stmt = $connect->prepare("INSERT INTO finalFav(user,title) VALUES (?,?)"))) {
+            echo "Prepare failed";
+        }
+
+        if (!$stmt->bind_param("ss", $user,$title)) {
+            echo "Binding parameters failed";
+        }
+        if (!$stmt->execute()) {
+            echo "Execute failed";
+        }
+        else{
+         echo "Added to Favorites";   
+        }
+}
+?>
+
+
+<?php
+    if(isset($_POST['search'])) {
+          $dbhost = 'oniddb.cws.oregonstate.edu';
+        $dbname = 'catesia-db';
+        $dbuser = 'catesia-db';
+        $dbpass = 'lDQEFSNyQixMYm7E';
+
+        //Done with the help of php mysqli documentation
+        $connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+        if ($connect->connect_errno) {
+            echo "Failed to connect: (" . $connect->connect_errno . ") " . $connect->connect_error;
+        } 
+        echo "
+            <form action=\"search.php\" method=\"post\">
+                <input type=\"hidden\" value=\"$user\" name=\"user\">
+                <input type=\"hidden\" value=\"$title\" name=\"title\">
+                <input type=\"submit\" value=\"Add comment\" name=\"addComment\">
+            </form>  
+            <textarea rows="4" cols="50" name=\"comment\" form=\"usrform\">
+            Enter text here...</textarea>
+            ";
+        
+    }
+?>
 <!DOCTYPE html>
 <html>
 <body>
     <script>
     
     </script>
-    <form action="addFav.php" method="post">
-        <input type="submit" value="Add to Favorites" name="addfav">
-    </form>
     
     
 </body>

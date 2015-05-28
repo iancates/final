@@ -10,4 +10,16 @@ $connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 if ($connect->connect_errno) {
     echo "Failed to connect: (" . $connect->connect_errno . ") " . $connect->connect_error;
 }
+$getAll = mysqli_query($connect,"SELECT * FROM finalFav");
+$user = $_POST['user'];
+while($row = mysqli_fetch_array($getAll)) {
+        if($row['user'] == $user){
+		echo "<tr>";
+		echo "<td>".$row['title']."   </td>";		
+		echo "<td><form method=\"POST\" action=\"movie.php\">";
+		echo "<input type=\"hidden\" name=\"index\" value=\"".$row['title']."\">";
+		echo "<input type=\"submit\" value=\"delete\" name=\"delete\" >";
+		echo "</form>";
+        }
+}
 ?>
