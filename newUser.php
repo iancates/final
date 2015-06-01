@@ -31,10 +31,12 @@ if(isset($_POST['createNew'])) {
             echo "Binding parameters failed";
         }
         if (!$stmt->execute()) {
-            echo "Execute failed";
+            echo "Invalid Username try again";
         }
+        else {
         //Change to redirect to sucsefull creation page
         header("Location: http://web.engr.oregonstate.edu/~catesia/final/final_login.php");
+        }
     }
     
 }
@@ -43,15 +45,28 @@ if(isset($_POST['createNew'])) {
 
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="newUser_style.css">
 <body>
-
-<form action="newUser.php" method="post">
-Enter Desired Username: <input type="text" name="username"><br>
-Enter New Password: <input type="secret" name="password"><br>
-
-<input type="submit" value="Create New User" name="createNew">
+    <div class="blog-header">
+        <h1 class="blog-title">Create Account</h1>
+        <p>To create an account all you have to do is enter your desired username and password. Just be aware that the name you choose will be displayed next to any comments you make.
+                </p>
+      </div>
+<section class="newUser cf">
+    <form action="newUser.php" method="post">
+        <ul>
+        <li><label for="username">Enter Username</label>
+        <input type="text" name="username" required></li>
+        
+        <li><label for="password">Enter Password</label>
+        <input type="password" name="password" required></li>
+        
+        <li>
+        <input type="submit" value="Create New User" name="createNew"></li>
+    </ul>
+    
 </form>
-
+</section>
 </body>
 </html>
 

@@ -1,3 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="addFav_style.css">
+<body>
+<div class="blog-header">
+        <h1 class="blog-title">Favorites</h1>
+      </div>
+<div class="blog-post"  width ="%50">
+            <h2 class="blog-post-title"></h2>
+            <p>Here is a list of all the movies you chose to save as a favorite.
+                </p>
+    </div>
+    
+</body>
+</html>
 <?php 
 ini_set('display_errors', 1);
 $dbhost = 'oniddb.cws.oregonstate.edu';
@@ -18,7 +33,7 @@ while($row = mysqli_fetch_array($getAll)) {
 		echo "<td>".$row['title']."   </td>";		
 		echo "<td><form method=\"POST\" action=\"movie.php\">";
 		echo "<input type=\"hidden\" name=\"index\" value=\"".$row['title']."\">";
-		echo "<input type=\"submit\" value=\"delete\" name=\"delete\" >";
+		
 		echo "</form>";
         }
 }

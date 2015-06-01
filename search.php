@@ -1,9 +1,22 @@
 
 
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="blog-header">
+        <h1 class="blog-title">Movie Search</h1>
+      </div>
+<div class="blog-post"  width ="%50">
+            <h2 class="blog-post-title"></h2>
+            <p>To find a movie all you have to do is enter its title.
+                </p>
+    </div>
+</body>
+</html>
 <?php
     $user = $_POST['user'];
     $title = $_POST['title'];
-    if(isset($_POST['search'])) {
+    if(isset($_POST['search']) || isset($_POST['addComment'])) {
         
         
         echo"
@@ -29,44 +42,77 @@
         
         
     }
-    echo "
-        <form action=\"search.php\" method=\"post\">
-        Movie Title: <input type=\"text\" name=\"title\">
-        <input type=\"hidden\" value=\"$user\" name=\"user\">
-        <input type=\"submit\" value=\"search\" name=\"search\">
-        </form>
-    ";
+  //  echo "
+//        <form action=\"search.php\" method=\"post\">
+//        Movie Title: <input type=\"text\" name=\"title\">
+//        <input type=\"hidden\" value=\"$user\" name=\"user\">
+//        <input type=\"submit\" value=\"search\" name=\"search\">
+//        </form>
+//    ";
+    
 ?>
 
 <!DOCTYPE html>
 <html>
+    <link rel="stylesheet" href="search_style.css">
+
 <body>
+    <section class="searchform cf">
+<form name="login" action="search.php" method="post">
+    <ul>
+        <li><label for="title">Search for Title</label>
+        <input type="text" name="title" required></li>
+        <input type="hidden" value="<?php echo $user; ?>" name="user">
+       
+        
+        
+        <li>
+        <input type="submit" value="search" name="search"></li>
+    </ul>
+    </form>
+</section>
     <script>
     
     </script>
-    
     <div id="div1">
+    
+    </div>
+    <div id="div2">
         
     </div>
     
 </body>
 </html>
-<?php //echo "<img src=\"$poster\" alt=\"some_text\">";?>
+<?php //echo "<img src=\"$poster\" alt=\"some_text\">";
+ //var img = new Image();
+   //         img.src = myArr.Poster
+     //       document.body.appendChild(img);
+?>
 <?php
-    if(isset($_POST['search'])) {
+    if(isset($_POST['search']) || isset($_POST['addComment'])) {
+        echo "
+        <script type=\"text/javascript\">
+            var para = document.createElement(\"p\");
+            var element = document.getElementById(\"div2\");
+            
+        
+            var node = document.createTextNode(\"Plot: \" + myArr.Plot);
+            para.appendChild(node);
+            document.write(\"<br>\");
+            element.appendChild(para);
+            </script>";
     echo "
         <script type=\"text/javascript\">
             var para = document.createElement(\"p\");
             var element = document.getElementById(\"div1\");
             
-            var img = new Image();
-            img.src = myArr.Poster
-            document.body.appendChild(img);
         
             var node = document.createTextNode(\"Title: \" + myArr.Title);
             para.appendChild(node);
             document.write(\"<br>\");
             var node = document.createTextNode(\"   ||  Year Released: \" + myArr.Year);
+            para.appendChild(node);
+            var node = document.createTextNode(\"   ||  IMDB rating: \" + myArr.imdbRating);
             para.appendChild(node);
             element.appendChild(para);
             </script>";
@@ -78,6 +124,7 @@
                 <input type=\"submit\" value=\"Add to Favorites\" name=\"addfav\">
             </form>         
             ";
+        
     }
 ?>
 
@@ -112,29 +159,28 @@ if(isset($_POST['addfav'])) {
 
 
 <?php
-    if(isset($_POST['search'])) {
-          $dbhost = 'oniddb.cws.oregonstate.edu';
-        $dbname = 'catesia-db';
-        $dbuser = 'catesia-db';
-        $dbpass = 'lDQEFSNyQixMYm7E';
-
-        //Done with the help of php mysqli documentation
-        $connect = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-        if ($connect->connect_errno) {
-            echo "Failed to connect: (" . $connect->connect_errno . ") " . $connect->connect_error;
-        } 
+    if(isset($_POST['search'])|| isset($_POST['addComment'])) {
+        echo"
+                <script type=\"text/javascript\">
+               
+                console.log(\"$user\");
+                
+    
+                </script>
+        ";
         echo "
-            <form action=\"search.php\" method=\"post\">
+            <form action=\"addComment.php\" method=\"post\" id=\"usrform\">
                 <input type=\"hidden\" value=\"$user\" name=\"user\">
                 <input type=\"hidden\" value=\"$title\" name=\"title\">
-                <input type=\"submit\" value=\"Add comment\" name=\"addComment\">
+                <input type=\"submit\" value=\"Go to Comments\" name=\"addComment\">
             </form>  
-            <textarea rows="4" cols="50" name=\"comment\" form=\"usrform\">
-            Enter text here...</textarea>
+            
             ";
-        
+       
     }
 ?>
+
+
 <!DOCTYPE html>
 <html>
 <body>
